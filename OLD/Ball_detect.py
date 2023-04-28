@@ -20,8 +20,8 @@ while True :
             #this number must be odd & if it is larger it will make it more blurred
         # @ 0 ==> sigmaX Gaussian kernel standard deviation in X direction.
     
-    circles = cv.HoughCircles(blurFrame, cv.HOUGH_GRADIENT, 1.2 , 2, 
-                              param1=10, param2=60, minRadius=0, maxRadius=500)
+    circles = cv.HoughCircles(blurFrame, cv.HOUGH_GRADIENT, 1 , 20, 
+                              param1=100, param2=30, minRadius=0, maxRadius=500)
     
         
         # @ HOUGH_GRADIENT ==> method Detection method,Finds circles in a grayscale image using the Hough transform 
@@ -51,9 +51,12 @@ while True :
                 if dist(chosen[0], chosen[1], prevCircles[0], prevCircles[1]) <= dist(i[0], i[1], prevCircles[0], prevCircles[1]) :
                     chosen = i
         
-        cv.circle(frame, (chosen[0], chosen[1]), 1, (0,100,100), 3)
-        cv.circle(frame, (chosen[0], chosen[1]), chosen[2], (255,0,255), 3)
-        prevCircles = chosen
+            #Center Dot
+            cv.circle(frame, (i[0], i[1]), 1, (0,100,100), 3)
+
+            #Outer circle
+            cv.circle(frame, (i[0], i[1]), i[2], (255,0,255), 3)
+            prevCircles = chosen
 
     cv.imshow("circles", frame)      # name of window
 

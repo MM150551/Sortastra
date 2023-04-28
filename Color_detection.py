@@ -4,14 +4,15 @@ import numpy as np
 '''
 Notes to self:
 
-frame shape is (480, 640, 3)
+frame dimensions is (480, 640, 3)
 
 '''
 cropSize = 40
-ULcorner = [int(240-(cropSize/2)),int(320-(cropSize/2))]
+AOI = [240,320]
+ULcorner = [int(AOI[0]-(cropSize/2)),int(AOI[1]-(cropSize/2))]
 videoCapture = cv.VideoCapture(0)
 
-idealColor = [5, 25, 132]
+idealColor = [167, 187, 194]
 x = True
 
 Rlist = []
@@ -22,8 +23,8 @@ colorTol = 50
 def list_avg(x):
      return int(sum(x)/len(x))
 
-def within_range(intendedValue,givenvalue,tolerance):
-    if(givenvalue <= intendedValue +tolerance/2 and givenvalue >= intendedValue - tolerance/2):
+def within_range(targetValue,givenvalue,tolerance):
+    if(givenvalue <= targetValue +tolerance/2 and givenvalue >= targetValue - tolerance/2):
         return True
     else:
         return False
@@ -59,7 +60,7 @@ while(1):
     print(RGBavgList)
     
     if(within_range(idealColor[0],RGBavgList[0],colorTol) and within_range(idealColor[1],RGBavgList[1],colorTol) and within_range(idealColor[2],RGBavgList[2],colorTol)):
-        print("the given onbject is within the color range")
+        print("the given object is within the color range")
 
     cv.imshow("cropped", Cropped_frame)
     cv.imshow("original", frame)
